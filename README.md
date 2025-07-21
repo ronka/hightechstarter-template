@@ -1,4 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HighTechStarter
+
+HighTechStarter is a modern web app starter template, ready for rapid development. It includes Next.js, Supabase, Clerk, and more—everything you need to launch your next startup quickly.
+
+התחל את המסע שלך עם תבנית מוכנה הכוללת Next.js, Supabase ו-Clerk. כל מה שאתה צריך כדי לבנות את הסטארטאפ הבא שלך בזמן שיא.
+
+## Tech Stack / סטאק טכנולוגי
+
+- **Next.js 15** – React Framework (⚛️)
+- **Supabase** – Backend as a Service (🔥)
+- **Clerk** – Authentication (🔐)
+- **TypeScript** – Type Safety (📘)
+- **Tailwind CSS** – Styling (🎨)
+- **Prisma** – Database ORM (💎)
+
+נבחרו בקפידה הטכנולוגיות המתקדמות והאמינות ביותר בשוק.
+
+## התקנה
+
+1. שיבטו את הריפוזיטורי:
+   ```bash
+   git clone <repo-url>
+   cd hightechstarter-template
+   ```
+2. התקינו את התלויות:
+   ```bash
+   npm install
+   # או
+   yarn install
+   # או
+   pnpm install
+   # או
+   bun install
+   ```
+3. העתיקו את קובץ הסביבה לדוגמה ועדכנו את המפתחות:
+   ```bash
+   cp .example.env .env.local
+   ```
+4. פתחו את `.env.local` והכניסו את הערכים שלכם:
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` – מפתח Clerk
+   - `CLERK_SECRET_KEY` – מפתח סודי של Clerk
+   - `DATABASE_URL` – כתובת חיבור למסד הנתונים (Supabase)
+
+> ⚠️ **Important / חשוב:**
+> Make sure to replace all placeholder keys in `.env.local` with your real credentials before running the project.
+> ודאו שהחלפתם את כל המפתחות בקובץ `.env.local` לערכים האמיתיים שלכם לפני הרצת הפרויקט.
 
 ## Getting Started
 
