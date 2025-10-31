@@ -33,7 +33,13 @@ export async function getClerkUser() {
   return { id: userId };
 }
 
-export async function createUserIfNotExists(clerkUser: any) {
+export async function createUserIfNotExists(clerkUser: {
+  id: string;
+  firstName?: string;
+  lastName?: string;
+  username?: string;
+  imageUrl?: string;
+}) {
   if (!clerkUser?.id) {
     throw new Error("Invalid user data");
   }
@@ -57,21 +63,6 @@ export async function createUserIfNotExists(clerkUser: any) {
         clerkUser.firstName && clerkUser.lastName
           ? `${clerkUser.firstName} ${clerkUser.lastName}`
           : clerkUser.username || "Anonymous",
-      avatar: clerkUser.imageUrl,
-      bio: "",
-      location: "",
-      joinedDate: new Date().toLocaleDateString("he-IL", {
-        year: "numeric",
-        month: "long",
-      }),
-      experience: "",
-      website: "",
-      github: "",
-      twitter: "",
-      skills: [],
-      projects: 0,
-      followers: 0,
-      following: 0,
     };
 
     const [createdUser] = await db.insert(users).values(newUser).returning();
