@@ -1,12 +1,11 @@
 import { db } from "./index";
-import { users, helloWorld } from "./schema";
+import { users } from "./schema";
 
 async function seed() {
   try {
     console.log("🌱 Starting database seeding...");
 
     // Clear existing data
-    await db.delete(helloWorld);
     await db.delete(users);
 
     // Seed users
@@ -24,16 +23,6 @@ async function seed() {
       ])
       .returning();
     console.log(`✅ Inserted ${insertedUsers.length} users`);
-
-    // Seed hello_world
-    const insertedHello = await db
-      .insert(helloWorld)
-      .values([
-        { message: "Hello, world!" },
-        { message: "Hi from the database!" },
-      ])
-      .returning();
-    console.log(`✅ Inserted ${insertedHello.length} hello_world rows`);
 
     console.log("🎉 Database seeding completed successfully!");
   } catch (error) {

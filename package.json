@@ -7,9 +7,10 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"db:seed": "tsx db/seed.ts",
+		"db:seed": "npx tsx db/seed.ts",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate": "drizzle-kit migrate"
+		"db:migrate": "drizzle-kit migrate",
+		"db:push": "drizzle-kit push"
 	},
 	"dependencies": {
 		"@clerk/nextjs": "^6.25.4",
