@@ -1,191 +1,191 @@
-import { Card, CardContent } from "@/components/ui/card";
+'use client';
 
-const Hero = () => {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="relative z-10 container mx-auto px-4 text-center">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            HighTechStarter
-          </h1>
+import { useState } from 'react';
+import Image from 'next/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Download, RefreshCw, Sparkles } from 'lucide-react';
 
-          <h2 className="text-2xl md:text-3xl font-semibold mb-8 text-foreground">
-            תבנית מוכנה לוייב קודינג
-          </h2>
+export default function Home() {
+  const [prompt, setPrompt] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
-          <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-            התחל את המסע שלך עם תבנית מוכנה הכוללת Next.js, Supabase ו-Clerk. כל
-            מה שאתה צריך כדי לבנות את הפרוייקט הבא שלך בזמן שיא.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-};
+  const handleGenerate = async () => {
+    if (!prompt.trim()) return;
+    setIsLoading(true);
+    // API call would go here
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  };
 
-const Setup = () => {
-  const steps = [
-    {
-      title: "התקנה",
-      icon: "📦",
-      commands: ["git clone <repo-url>", "cd hightechstarter-template", "npm install"],
-    },
-    {
-      title: "הגדרת סביבה",
-      icon: "⚙️",
-      commands: ["cp .example.env .env"],
-      note: "ערכו את .env עם המפתחות שלכם",
-    },
-    {
-      title: "מסד נתונים",
-      icon: "🗄️",
-      commands: ["npm run db:generate", "npm run db:push", "npm run db:seed"],
-      note: "seed אופציונלי",
-    },
-    {
-      title: "הפעלה",
-      icon: "🚀",
-      commands: ["npm run dev"],
-      note: "localhost:3000",
-    },
-  ];
+  const handleDownload = () => {
+    if (!generatedImage) return;
+    const link = document.createElement('a');
+    link.href = generatedImage;
+    link.download = `coloring-page-${Date.now()}.png`;
+    link.click();
+  };
 
   return (
-    <section className="py-24 px-4 bg-gradient-secondary">
-      <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">התחלה מהירה</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            ארבעה צעדים פשוטים להתחיל לעבוד
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Sparkles className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
+                Coloring Pages
+              </h1>
+              <Sparkles className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            </div>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              Transform your imagination into beautiful coloring pages using AI. Describe what you&apos;d like to see, and we&apos;ll generate it for you.
+            </p>
+          </div>
 
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
-        >
-          {steps.map((step, index) => (
-            <Card
-              key={index}
-              className="group relative overflow-hidden bg-background border-primary/10 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/50 to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-lg">
-                    {step.icon}
-                  </div>
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold">
-                    {index + 1}
-                  </div>
-                </div>
-                <h3 dir="rtl" className="font-bold text-lg mb-4 text-right">
-                  {step.title}
-                </h3>
-                <div dir="ltr" className="bg-muted/50 rounded-lg p-4 text-sm font-mono text-foreground space-y-2 border border-border/50">
-                  {step.commands.map((cmd, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <span className="text-primary/60 select-none">$</span>
-                      <code className="text-xs md:text-sm break-all">{cmd}</code>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Input Panel */}
+            <div className="lg:col-span-1">
+              <Card className="sticky top-8 border-slate-200 dark:border-slate-800 shadow-lg">
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                        Describe Your Coloring Page
+                      </label>
+                      <Textarea
+                        placeholder="e.g., A peaceful garden with flowers, butterflies, and a winding path through trees..."
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        className="resize-none h-32 border-slate-300 dark:border-slate-700"
+                      />
                     </div>
-                  ))}
-                </div>
-                {step.note && (
-                  <p dir="rtl" className="text-xs text-muted-foreground mt-3 text-right">
-                    {step.note}
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
-const TechStack = () => {
-  const technologies = [
-    {
-      name: "Next.js 15",
-      description: "React Framework",
-      icon: "⚛️",
-    },
-    {
-      name: "Supabase Ready",
-      description: "Backend as a Service",
-      icon: "🔥",
-    },
-    {
-      name: "Clerk",
-      description: "Authentication",
-      icon: "🔐",
-    },
-    {
-      name: "TypeScript",
-      description: "Type Safety",
-      icon: "📘",
-    },
-    {
-      name: "Tailwind CSS",
-      description: "Styling",
-      icon: "🎨",
-    },
-    {
-      name: "Drizzle",
-      description: "Database ORM",
-      icon: "💎",
-    },
-  ];
+                    <div className="space-y-2">
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Tips: Be specific about elements, style (simple, detailed, cartoon), and the mood you want.
+                      </p>
+                    </div>
 
-  return (
-    <section className="py-24 px-4 bg-gradient-secondary">
-      <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            סטאק טכנולוגי מתקדם
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            נבחרו בקפידה הטכנולוגיות המתקדמות והאמינות ביותר בשוק
-          </p>
-        </div>
+                    <Button
+                      onClick={handleGenerate}
+                      disabled={isLoading || !prompt.trim()}
+                      className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white h-11"
+                    >
+                      {isLoading ? (
+                        <>
+                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                          Generating...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-4 h-4 mr-2" />
+                          Generate
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-          {technologies.map((tech, index) => (
-            <Card
-              key={index}
-              className="group hover:shadow-glow-primary/20 transition-all duration-300 hover:-translate-y-2 text-center bg-gradient-accent backdrop-blur-sm border-primary/20"
-            >
+            {/* Preview Panel */}
+            <div className="lg:col-span-2">
+              <Card className="border-slate-200 dark:border-slate-800 shadow-lg h-full">
+                <CardContent className="p-6 h-full">
+                  {generatedImage ? (
+                    <div className="space-y-4 h-full flex flex-col">
+                      <div className="flex-1 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative">
+                        <Image
+                          src={generatedImage}
+                          alt="Generated coloring page"
+                          fill
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      </div>
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={handleDownload}
+                          variant="default"
+                          className="flex-1 bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white"
+                        >
+                          <Download className="w-4 h-4 mr-2" />
+                          Download
+                        </Button>
+                        <Button
+                          onClick={() => setGeneratedImage(null)}
+                          variant="outline"
+                          className="flex-1"
+                        >
+                          <RefreshCw className="w-4 h-4 mr-2" />
+                          New
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="h-full flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="w-20 h-20 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center mx-auto mb-4">
+                          <Sparkles className="w-10 h-10 text-slate-400 dark:text-slate-600" />
+                        </div>
+                        <p className="text-slate-600 dark:text-slate-400 font-medium">
+                          Your coloring page will appear here
+                        </p>
+                        <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
+                          Describe what you&apos;d like and click Generate
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Features */}
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="border-slate-200 dark:border-slate-800">
               <CardContent className="p-6">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {tech.icon}
+                <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-3">
+                  <Sparkles className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
-                <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
-                  {tech.name}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {tech.description}
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">AI&ndash;Powered</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Create unlimited coloring pages with advanced AI technology
                 </p>
               </CardContent>
             </Card>
-          ))}
-        </div>
 
-        <div className="text-center mt-16">
-          <p className="text-lg text-muted-foreground">
-            + עוד המון תוספות וכלים מתקדמים לפיתוח מהיר ויעיל
-          </p>
+            <Card className="border-slate-200 dark:border-slate-800">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center mb-3">
+                  <Download className="w-6 h-6 text-green-600 dark:text-green-400" />
+                </div>
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Easy Download</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Save your pages in high quality ready to print
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-slate-200 dark:border-slate-800">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-3">
+                  <RefreshCw className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Regenerate</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Not happy? Easily generate new versions of your design
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
-    </section>
-  );
-};
-
-export default function Home() {
-  return (
-    <div className="min-h-screen bg-background">
-      <Hero />
-      <TechStack />
-      <Setup />
     </div>
   );
 }

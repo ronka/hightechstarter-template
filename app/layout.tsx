@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HighTechStarter",
-  description: "תבנית מתקדמת",
+  title: "AI Coloring Pages",
+  description: "Generate beautiful coloring pages from text prompts using AI",
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <Providers>
-      <html dir="rtl" lang="he">
+      <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
